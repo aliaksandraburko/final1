@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+
+    <!--style-->
+    <style>
+        .card {
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5),
+            0 6px 8px 0 rgba(0, 0, 0, 0.39);
+            background: cadetblue;
+            margin-bottom: 5%;
+            border-radius: 17px;
+            padding: 2%;
+            overflow: auto;
+            resize: both;
+            text-overflow: ellipsis;
+        }
+
+        .card:hover {
+            background: darkseagreen;
+        }
+
+        .submit_form {
+
+            text-align: center;
+            padding: 3%;
+            background: seagreen;
+            border-radius: 25px;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1),
+            0 6px 8px 0 rgba(0, 0, 0, 0.16);
+        }
+    </style>
+
+</head>
+
+<body class="container-fluid">
+
+<center class="row">
+    <p><font size="15" color="Green" face="Georgia">Short URL</font>
+    <p>
+
+    <hr/>
+
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="sumbit" value="Generate shorter link">
+    </form>
+
+
+<style type="text/css">
+   TABLE {
+    width: 900px; /* Ширина таблицы */
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+   }
+   TD, TH {
+    padding: 3px; /* Поля вокруг содержимого таблицы */
+    border: 1px solid black; /* Параметры рамки */
+   }
+   TH {
+    background: #b0e0e6; /* Цвет фона */
+   }
+  </style>
+ </head>
+ <body>
+  <table>
+   <tr>
+    <th>Link</th><th>Upgrade link</th><th>Date</th><th>Cliks</th>
+   </tr>
+      {% for url in urls %}
+     <tr><td>{{ url.notshorter_url }}</td><td><a href="link/{{ url.link }}">http://link/{{ url.link }}
+    </a></td><td>{{ url.created }}</td><td>{{ url.clicks }}</td></tr>
+            {% endfor %}
+
+  </table>
+ </body>
+</html>
