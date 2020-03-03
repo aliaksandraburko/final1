@@ -1,5 +1,5 @@
 
-Todo-Django A django web app for basic task lists that are segmented by user.
+URL- SHORTER WEBSITE
 
 
 INSTALLATION
