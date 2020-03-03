@@ -17,5 +17,7 @@ pip install -r requirements.txt
 For the first time don't forget:
 
 python manage.py makemigrations
+
 python manage.py migrate
+
 python manage.py runserver
