@@ -1,0 +1,127 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!--style-->
+    <style>
+        .card {
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5),
+            0 6px 8px 0 rgba(0, 0, 0, 0.39);
+            background: cadetblue;
+            margin-bottom: 5%;
+            border-radius: 17px;
+            padding: 2%;
+            overflow: auto;
+            resize: both;
+            text-overflow: ellipsis;
+        }
+
+        .card:hover {
+            background: darkseagreen;
+        }
+
+        .submit_form {
+
+            text-align: center;
+            padding: 3%;
+            background: seagreen;
+            border-radius: 25px;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1),
+            0 6px 8px 0 rgba(0, 0, 0, 0.16);
+        }
+    </style>
+
+</head>
+
+<body class="container-fluid">
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">
+            <strong>{{ message }}</strong>
+
+        </div>
+    {% endfor %}
+{% endif %}
+
+<center class="row">
+    <p><font size="15" color="Green" face="Georgia">to do list</font>
+    <p>
+
+    <hr/>
+</center>
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        {% for i in list %}
+            <div class="card">
+                <center><b>{{ i.title }}</b></center>
+                <hr/>
+                {{ i.date }}
+                <hr/>
+                {{ i.details }}
+
+                <br/>
+                <br/>
+                <form action="{% url 'del'  i.id %}" method="POST" style="padding-right: 4%; padding-bottom: 3%;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" style="float: right;">
+                        <span class="glyphicon glyphicon-trash"></span> &nbsp; remove
+                    </button>
+                </form>
+
+
+
+                <form action="{% url 'check' i.id %}" method="POST" style="padding-right: 4%; padding-bottom: 3%;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" style="float: left">
+                        <span class="glyphicon glyphicon-search"></span> mark as done
+                    </button>
+                </form>
+
+
+            <ul class="list-group t20">
+                {% for todo in todo_list %}
+                    {% if todo.complete %}
+                        <li class="list-group-item todo-completed">{{ todo.text }}</li>
+                    {% else %}
+                        <a href="{% url 'complete' todo.id %}">
+                            <li class="list-group-item">{{ todo.text }}</li>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            </div>
+        {% endfor %}
+</div>
+<div class="col-md-2"></div>
+<div class="col-md-3">
+    <div class="submit_form">
+        <form method="POST">
+            {% csrf_token %}
+            {{ forms|crispy }}
+            <center>
+                <input type="submit" class="btn btn-default" value="submit"/>
+
+            </center>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+
+</html>
